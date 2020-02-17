@@ -1,0 +1,17 @@
+if !searched
+    include category.pug
+div#search
+    form(class="pure-form", method="POST")
+        input(
+            type="text",
+            class="pure-input-rounded",
+            name="search-input"
+        )
+        button(
+            type="submit"
+            class="pure-button pure-button-primary user-input"
+        ) Search
+        span (Search by first name, last name, email, and age)
+
+div#reset-all
+    a(href="/userList", class="pure-button") Reset All

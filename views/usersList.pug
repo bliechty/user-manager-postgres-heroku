@@ -1,0 +1,59 @@
+html
+    head
+        include pure.pug
+        include fonts.pug
+        script(src="https://code.jquery.com/jquery-3.3.1.js")
+        style
+            include css/navBar.css
+            include css/usersList.css
+            include css/text.css
+            include css/headers.css
+            include css/error.css
+    body
+        include navBar.pug
+        h2 User List
+        if users.length !== 0
+            include search.pug
+            table(class="pure-table pure-table-bordered", id="user-list-table")
+                thead
+                    tr
+                        th First Name
+                        th Last Name
+                        th Age
+                        th Email
+                        th Account Created
+                        th Edit User
+                        th Delete User
+                tbody
+                    each obj in users
+                        tr
+                            td= obj.first
+                            td= obj.last
+                            td= obj.age
+                            td= obj.emailAddress
+                            td= obj.createdDate
+                            td
+                                a.anchor(
+                                    href="/userList/"+obj._id,
+                                    class="pure-button"
+                                    ) Edit User
+                            td
+                                a.anchor(
+                                    href="/deleteUser/"+obj._id,
+                                    class="pure-button"
+                                    ) Delete User
+        else if searched
+            include search.pug
+            div(class="error-container", id="no-users-found")
+                div.error
+                    div.error-message No users found
+        else
+            div.error-container
+                div.error
+                    div.error-message No users saved
+                    a(href="/createUser", class="pure-button try-again anchor") Create User
+
+        if category && order
+            script.
+                $("#user-category").val("#{category}");
+                $("#user-order").val("#{order}");

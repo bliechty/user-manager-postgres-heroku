@@ -1,0 +1,25 @@
+html
+    head
+        include pure.pug
+        include fonts.pug
+        style
+            include css/login.css
+            include css/text.css
+            include css/headers.css
+    body
+        div#login-container
+            div#login
+                div#log-in
+                    h2 Log In
+                    form(method="post", class="pure-form pure-form-aligned")
+                        div(class="pure-control-group")
+                            label Username:
+                            input(type="text", name="username")
+                        div(class="pure-control-group")
+                            label Password:
+                            input(type="password", name="password")
+                        div(class="pure-controls")
+                            input(type="submit", value="Log In", class="pure-button pure-button-primary")
+                div#login-info
+                    div.info Username: bradyliechty
+                    div.info Password: bliechty1234

@@ -1,0 +1,16 @@
+#user-list-table {
+    margin: 20px auto;
+}
+
+#display-by-category, #search, #reset-all {
+    display: flex;
+    justify-content: center;
+}
+
+.user-input {
+    margin: 0 5px;
+}
+
+#no-users-found {
+    margin-top: 20px;
+}

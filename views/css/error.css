@@ -1,0 +1,21 @@
+.error-container {
+    margin: 0 auto;
+    width: 400px;
+}
+
+.error {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: gray;
+    border-radius: 3px;
+    padding: 5px 20px;
+}
+
+.error-message {
+    color: white;
+}
+
+.try-again {
+    margin: 0 5px;
+}

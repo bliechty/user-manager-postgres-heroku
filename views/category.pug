@@ -1,0 +1,24 @@
+div#display-by-category
+    form(class="pure-form", id="displayUsers", method="POST")
+        span Display users by
+        select(
+            id="user-category"
+            class="user-input",
+            onchange="this.form.submit()",
+            name="user-category"
+        )
+            option(value="_id") date created
+            option(value="first") first name
+            option(value="last") last name
+            option(value="age") age
+            option(value="emailAddress") email address
+        span in
+        select(
+            id="user-order",
+            class="user-input",
+            onchange="this.form.submit()",
+            name="user-order"
+        )
+            option ascending
+            option descending
+        span order
