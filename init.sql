@@ -4,7 +4,7 @@ create table users (
 	last varchar(255) not null,
 	age int not null,
 	emailaddress varchar(255) not null,
-	createddate timestamp default now()
+	createddate varchar default now()
 );
 
 insert into users (first, last, age, emailaddress) values
@@ -17,4 +17,4 @@ insert into users (first, last, age, emailaddress) values
 	('Hebert', 'Rutledge', 49, 'hebertrutledge@corporana.com'),
 	('Meyer', 'Hayes', 41, 'meyerhayes@corporana.com'),
 	('Vaughan', 'Wagner', 28, 'vaughanwagner@corporana.com'),
-	('Etta', 'Hernandez', 70, 'ettahernandez@corporana.com')
+	('Etta', 'Hernandez', 70, 'ettahernandez@corporana.com');

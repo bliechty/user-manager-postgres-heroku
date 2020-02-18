@@ -11,7 +11,17 @@ const displayAllUsers = (req, res) => {
         if (e) {
             throw e;
         } else {
-            res.json(r.rows);
+            const users = r.rows.map(user => {
+                const regex = /(.+)\./;
+                const createddate = user.createddate.match(regex)[1];
+                console.log(createddate);
+                return {
+                    ...user,
+                    createddate
+                }
+            });
+            console.log(users);
+            res.render("usersList", {users});
         }
     });
 };
