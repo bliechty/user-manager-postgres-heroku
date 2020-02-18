@@ -58,15 +58,33 @@ const userListPost = (req, res) => {
             !/\+/.test(searchInput) &&
             !/\?/.test(searchInput) &&
             searchInput !== "") {
-            // To Do
-            // repository.search(searchInput).then(users => {
-            //     res.render("usersList", {users, category, order, searched: true});
-            // }).catch(e => {
-            //     console.log(`Error occurred: ${e}`);
-            // });
+            const searchCommand = search(searchInput);
+            pool.query(searchCommand, (e, r) => {
+                if (e) {
+                    throw e;
+                } else {
+                    const users = r.rows.map(user => {
+                        const regex = /(.+)\./;
+                        const createddate = user.createddate.match(regex)[1];
+                        return {
+                            ...user,
+                            createddate
+                        }
+                    });
+                    res.render("usersList", {users, category, order, searched: true});
+                }
+            });
         } else {
             res.render("usersList", {users: [], category, order, searched: true});
         }
+    }
+};
+
+const search = (searchInput) => {
+    if (/^\d+$/.test(searchInput)) {
+        return `select * from users where age = ${searchInput}`;
+    } else {
+        return `select * from users where first = '${searchInput}' or last = '${searchInput}' or emailaddress = '${searchInput}'`;
     }
 };
 
