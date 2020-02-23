@@ -1,8 +1,13 @@
 const { pool } = require('../config');
 
 const createUser = (req, res) => {
-    pool.query('insert into users', [], (e, r) => {
-
+    const body = req.body;
+    pool.query('insert into users (first, last, age, emailaddress) values ($1, $2, $3, $4)', [body["first-name"], body["last-name"], body.age, body["email-address"]], (e, r) => {
+        if (e) {
+            throw e;
+        } else {
+            res.redirect("/userList");
+        }
     });
 };
 

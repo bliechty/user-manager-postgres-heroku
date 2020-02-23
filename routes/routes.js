@@ -10,6 +10,8 @@ app.get("/createUser", (req, res) => {
     res.render("createUser");
 });
 
+app.post("/createUser", db.createUser);
+
 app.get("/functionality", (req, res) => {
     res.render("functionality");
 });
