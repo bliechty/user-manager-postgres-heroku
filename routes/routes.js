@@ -22,4 +22,8 @@ app.get("/functionality", (req, res) => {
 
 app.get("/deleteUser/:userId", db.deleteUser);
 
+app.get("/userList/:userId", db.editUserGet);
+
+app.post("/userList/:userId", db.editUserPost);
+
 module.exports = app;

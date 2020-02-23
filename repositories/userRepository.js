@@ -75,6 +75,40 @@ const deleteUser = (req, res) => {
     });
 };
 
+const editUserGet = (req, res) => {
+    pool.query('select * from users where _id = $1', [req.params.userId], (e, r) => {
+        if (e) {
+            throw e;
+        } else {
+            if (r.rows.length !== 0) {
+                res.render("editUser", {user: r.rows[0]});
+            } else {
+                res.render("error", {message: "That user does not exist"});
+            }
+        }
+    });
+};
+
+const editUserPost = (req, res) => {
+    if (
+        req.body["first-name"] === "" || req.body["last-name"] === "" ||
+        req.body["email-address"] === "" || req.body["age"] === ""
+    ) {
+        res.render("error", {message: "Inputs cannot be blank"});
+    } else if (req.body["age"] <= 0) {
+        res.render("error", {message: "Age has to be greater than 0"});
+    } else {
+        const body = req.body;
+        pool.query('update users set first = $1, last = $2, age = $3, emailaddress = $4 where _id = $5', [body["first-name"], body["last-name"], body.age, body["email-address"], req.params.userId], (e, r) => {
+            if (e) {
+                throw e;
+            } else {
+                res.redirect("/userList");
+            }
+        });
+    }
+};
+
 const categoryAndOrder = (category, order) => {
     return `select * from users order by ${category} ${order === "ascending" ? "asc" : "desc"}`;
 };
@@ -99,5 +133,7 @@ module.exports = {
     createUser,
     displayAllUsers,
     userListPost,
-    deleteUser
+    deleteUser,
+    editUserGet,
+    editUserPost
 };
