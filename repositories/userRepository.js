@@ -65,6 +65,16 @@ const userListPost = (req, res) => {
     }
 };
 
+const deleteUser = (req, res) => {
+    pool.query('delete from users where _id = $1', [req.params.userId], (e, r) => {
+        if (e) {
+            throw e;
+        } else {
+            res.redirect("/userList");
+        }
+    });
+};
+
 const categoryAndOrder = (category, order) => {
     return `select * from users order by ${category} ${order === "ascending" ? "asc" : "desc"}`;
 };
@@ -88,5 +98,6 @@ const checkForCategoryAndOrder = (cookies) => {
 module.exports = {
     createUser,
     displayAllUsers,
-    userListPost
+    userListPost,
+    deleteUser
 };

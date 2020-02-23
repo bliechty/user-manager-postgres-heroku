@@ -20,4 +20,6 @@ app.get("/functionality", (req, res) => {
     res.render("functionality");
 });
 
+app.get("/deleteUser/:userId", db.deleteUser);
+
 module.exports = app;
