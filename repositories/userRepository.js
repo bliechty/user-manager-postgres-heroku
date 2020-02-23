@@ -7,7 +7,6 @@ const createUser = (req, res) => {
 };
 
 const displayAllUsers = (req, res) => {
-    console.log(req.cookies);
     const cookies = checkForCategoryAndOrder(req.cookies);
     const category = cookies.category;
     const order = cookies.order;
@@ -15,15 +14,7 @@ const displayAllUsers = (req, res) => {
         if (e) {
             throw e;
         } else {
-            const users = r.rows.map(user => {
-                const regex = /(.+)\./;
-                const createddate = user.createddate.match(regex)[1];
-                return {
-                    ...user,
-                    createddate
-                }
-            });
-            res.render("usersList", {users, category, order});
+            res.render("usersList", {users: r.rows, category, order});
         }
     });
 };
@@ -39,15 +30,7 @@ const userListPost = (req, res) => {
         res.cookie("order", order);
         const sort = categoryAndOrder(category, order);
         pool.query(sort, (e, r) => {
-            const users = r.rows.map(user => {
-                const regex = /(.+)\./;
-                const createddate = user.createddate.match(regex)[1];
-                return {
-                    ...user,
-                    createddate
-                }
-            });
-            res.render("usersList", {users, category, order});
+            res.render("usersList", {users: r.rows, category, order});
         });
     } else {
         const cookies = checkForCategoryAndOrder(req.cookies);
@@ -58,33 +41,22 @@ const userListPost = (req, res) => {
             !/\+/.test(searchInput) &&
             !/\?/.test(searchInput) &&
             searchInput !== "") {
-            const searchCommand = search(searchInput);
-            pool.query(searchCommand, (e, r) => {
+            let searchCommand;
+            if (/^\d+$/.test(searchInput)) {
+                searchCommand = "select * from users where age = $1";
+            } else {
+                searchCommand = "select * from users where LOWER(first) = LOWER($1) or LOWER(last) = LOWER($1) or LOWER(emailaddress) = LOWER($1)";
+            }
+            pool.query(searchCommand, [searchInput], (e, r) => {
                 if (e) {
                     throw e;
                 } else {
-                    const users = r.rows.map(user => {
-                        const regex = /(.+)\./;
-                        const createddate = user.createddate.match(regex)[1];
-                        return {
-                            ...user,
-                            createddate
-                        }
-                    });
-                    res.render("usersList", {users, category, order, searched: true});
+                    res.render("usersList", {users: r.rows, category, order, searched: true});
                 }
             });
         } else {
             res.render("usersList", {users: [], category, order, searched: true});
         }
-    }
-};
-
-const search = (searchInput) => {
-    if (/^\d+$/.test(searchInput)) {
-        return `select * from users where age = ${searchInput}`;
-    } else {
-        return `select * from users where first = '${searchInput}' or last = '${searchInput}' or emailaddress = '${searchInput}'`;
     }
 };
 

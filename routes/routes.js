@@ -6,6 +6,10 @@ app.get("/userList", db.displayAllUsers);
 
 app.post("/userList", db.userListPost);
 
+app.get("/createUser", (req, res) => {
+    res.render("createUser");
+});
+
 app.get("/functionality", (req, res) => {
     res.render("functionality");
 });
