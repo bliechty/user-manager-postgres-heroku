@@ -110,7 +110,7 @@ const editUserPost = (req, res) => {
 };
 
 const categoryAndOrder = (category, order) => {
-    return `select * from users order by ${category} ${order === "ascending" ? "asc" : "desc"}`;
+    return `select * from users order by LOWER(${category}) ${order === "ascending" ? "asc" : "desc"}`;
 };
 
 const checkForCategoryAndOrder = (cookies) => {
