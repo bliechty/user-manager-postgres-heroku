@@ -33,8 +33,7 @@ const userListPost = (req, res) => {
         order = req.body["user-order"];
         res.cookie("category", category);
         res.cookie("order", order);
-        const sort = categoryAndOrder(category, order);
-        pool.query(sort, (e, r) => {
+        pool.query(categoryAndOrder(category, order), (e, r) => {
             res.render("usersList", {users: r.rows, category, order});
         });
     } else {
@@ -110,7 +109,12 @@ const editUserPost = (req, res) => {
 };
 
 const categoryAndOrder = (category, order) => {
-    return `select * from users order by LOWER(${category}) ${order === "ascending" ? "asc" : "desc"}`;
+    if (category === "age" || category === "_id") {
+        return `select * from users order by ${category} ${order === "ascending" ? "asc" : "desc"}`;
+    } else {
+        return `select * from users order by LOWER(${category}) ${order === "ascending" ? "asc" : "desc"}`;
+    }
+    
 };
 
 const checkForCategoryAndOrder = (cookies) => {
