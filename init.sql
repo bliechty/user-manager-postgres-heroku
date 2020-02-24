@@ -1,6 +1,4 @@
-create database if not exists usermanagerbackup;
-
-create table if not exists users (
+create table users (
     _id serial primary key,
 	first varchar(255) not null,
 	last varchar(255) not null,
