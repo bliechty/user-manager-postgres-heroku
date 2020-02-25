@@ -113,3 +113,9 @@ insert into users (first, last, age, emailaddress) values
 	('Vaughan', 'Wagner', 28, 'vaughanwagner@corporana.com'),
 	('Etta', 'Hernandez', 70, 'ettahernandez@corporana.com');
 ```
+
+# Starting App
+
+To run node: npm run local
+
+To run nodemon: npm run nodemon
