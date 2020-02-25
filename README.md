@@ -63,6 +63,8 @@ Navigate to the SQL Shell, put in all relevant info, then enter the following co
 create database usermanagerlocal;
 ```
 
+(note: if you want to change the name of the database make sure to change DB_DATABASE in the .env file)
+
 Navigate to PGADMIN 4
 
 Create a new server
